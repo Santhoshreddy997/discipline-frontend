@@ -25,11 +25,6 @@ function Habits({ user }) {
     loadData();
   }, [loadData]); // ✅ safer dependency
 
-  API.get(`/tasks/user/${user.id}`)
-    .then(res => setTasks(res.data));
-
-}, [user?.id]);
-
   const addHabit = () => {
 
     if (!user || !user.id) return; // ✅ safety

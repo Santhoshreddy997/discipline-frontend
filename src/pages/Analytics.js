@@ -6,13 +6,14 @@ import "./Analytics.css";
 function Analytics({ user }) {
 
   const [data, setData] = useState([]);
+  const userId = user?.id;
 
   useEffect(() => {
-    if (!user || !user.id) return;
+    if (!userId) return;
 
-    API.get(`/tasks/weekly/${user.id}`)
+    API.get(`/tasks/weekly/${userId}`)
       .then(res => setData(res.data));
-  }, [user?.id]);
+  }, [userId]);
 
   return (
     <div className="analytics-container">

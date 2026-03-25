@@ -8,18 +8,19 @@ function Habits({ user }) {
   const [habits, setHabits] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [habitName, setHabitName] = useState("");
+  const userId = user?.id;
 
   const loadData = useCallback(() => {
 
-    if (!user || !user.id) return;
+    if (!userId) return;
 
-    API.get(`/habits/user/${user.id}`)
+    API.get(`/habits/user/${userId}`)
       .then(res => setHabits(res.data));
 
-    API.get(`/tasks/user/${user.id}`)
+    API.get(`/tasks/user/${userId}`)
       .then(res => setTasks(res.data));
 
-  }, [user?.id]);
+  }, [userId]);
 
   useEffect(() => {
     loadData();
@@ -27,7 +28,7 @@ function Habits({ user }) {
 
   const addHabit = () => {
 
-    if (!user || !user.id) return; // ✅ safety
+    if (!userId) return; // ✅ safety
     if (habitName.trim() === "") return;
 
     API.post("/habits", {

@@ -9,16 +9,21 @@ function Habits({ user }) {
   const [tasks, setTasks] = useState([]);
   const [habitName, setHabitName] = useState("");
 
+  const loadData = useCallback(() => {
+
+    if (!user || !user.id) return;
+
+    API.get(`/habits/user/${user.id}`)
+      .then(res => setHabits(res.data));
+
+    API.get(`/tasks/user/${user.id}`)
+      .then(res => setTasks(res.data));
+
+  }, [user?.id]);
+
   useEffect(() => {
-  loadData();
-}, [loadData]); // ✅ safer dependency
-
- const loadData = useCallback(() => {
-
-  if (!user || !user.id) return;
-
-  API.get(`/habits/user/${user.id}`)
-    .then(res => setHabits(res.data));
+    loadData();
+  }, [loadData]); // ✅ safer dependency
 
   API.get(`/tasks/user/${user.id}`)
     .then(res => setTasks(res.data));

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback} from "react";
 import API from "../api/api";
 import "./Habits.css";
 import banner from "../assets/habits-banner.png";
@@ -10,20 +10,20 @@ function Habits({ user }) {
   const [habitName, setHabitName] = useState("");
 
   useEffect(() => {
-    if (!user || !user.id) return; // ✅ fix
-    loadData();
-  }, [user?.id]); // ✅ safer dependency
+  loadData();
+}, [loadData]); // ✅ safer dependency
 
-  const loadData = () => {
+ const loadData = useCallback(() => {
 
-    if (!user || !user.id) return; // ✅ safety
+  if (!user || !user.id) return;
 
-    API.get(`/habits/user/${user.id}`)
-      .then(res => setHabits(res.data));
+  API.get(`/habits/user/${user.id}`)
+    .then(res => setHabits(res.data));
 
-    API.get(`/tasks/user/${user.id}`)
-      .then(res => setTasks(res.data));
-  };
+  API.get(`/tasks/user/${user.id}`)
+    .then(res => setTasks(res.data));
+
+}, [user?.id]);
 
   const addHabit = () => {
 

@@ -28,7 +28,7 @@ function Home({ user, setUser }) {
         console.error("User refresh error:", err);
       });
 
-  }, [user?.id]); // ✅ safer dependency
+ }, [user?.id, setUser]);// ✅ safer dependency
 
 
 

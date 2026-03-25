@@ -12,7 +12,7 @@ function Analytics({ user }) {
 
     API.get(`/tasks/weekly/${user.id}`)
       .then(res => setData(res.data));
-  }, [user]);
+  }, [user?.id]);
 
   return (
     <div className="analytics-container">

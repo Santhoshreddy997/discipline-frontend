@@ -1,38 +1,38 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 import disciplineImg from "../assets/discipline.png";
-import API from "../api/api"; // 🔥 IMPORTANT
+import API from "../api/api";
 
 function Home({ user, setUser }) {
 
   const [localUser, setLocalUser] = useState(user);
   const today = new Date().toLocaleDateString();
 
-  // 🔥 FETCH LATEST USER DATA (THIS FIXES YOUR ISSUE)
+  // 🔥 FETCH LATEST USER DATA (FIXED SAFELY)
   useEffect(() => {
 
-    if (user) {
-      API.get(`/users/${user.id}`)
-        .then(res => {
-          setLocalUser(res.data);
+    if (!user || !user.id) return; // ✅ fix (important)
 
-          // update global + local storage
-          localStorage.setItem("user", JSON.stringify(res.data));
+    API.get(`/users/${user.id}`)
+      .then(res => {
+        setLocalUser(res.data);
 
-          if (setUser) {
-            setUser(res.data);
-          }
-        })
-        .catch(err => {
-          console.error("User refresh error:", err);
-        });
-    }
+        // update global + local storage
+        localStorage.setItem("user", JSON.stringify(res.data));
 
-  }, [user]);
+        if (setUser) {
+          setUser(res.data);
+        }
+      })
+      .catch(err => {
+        console.error("User refresh error:", err);
+      });
+
+  }, [user?.id]); // ✅ safer dependency
 
 
 
-  // 🔥 LOGOUT
+  // 🔥 LOGOUT (unchanged)
   const logout = () => {
     localStorage.removeItem("user");
     window.location.reload();
@@ -49,7 +49,8 @@ function Home({ user, setUser }) {
 
         <img src={disciplineImg} alt="discipline" className="hero-img" />
 
-        <h2>Welcome {localUser?.name}</h2>
+        {/* ✅ small fallback fix */}
+        <h2>Welcome {localUser?.name || ""}</h2>
 
         <p><b>Date:</b> {today}</p>
 

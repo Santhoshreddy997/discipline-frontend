@@ -8,27 +8,23 @@ function Analytics({ user }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    if (!user || !user.id) return;
+
     API.get(`/tasks/weekly/${user.id}`)
       .then(res => setData(res.data));
-  }, []);
-return (
+  }, [user]);
 
-  <div className="analytics-container">
+  return (
+    <div className="analytics-container">
+      <div className="overlay"></div>
 
-    <div className="overlay"></div>
+      <h2 className="page-title">Your Weekly Progress</h2>
 
-    {/* 🔥 PAGE HEADING */}
-    <h2 className="page-title">Your Weekly Progress</h2>
-
-    {/* 🔥 CARD */}
-    <div className="analytics-card">
-
-      <WeeklyChart data={data} />
-
+      <div className="analytics-card">
+        <WeeklyChart data={data} />
+      </div>
     </div>
-
-  </div>
-);
+  );
 }
 
 export default Analytics;

@@ -10,10 +10,13 @@ function Habits({ user }) {
   const [habitName, setHabitName] = useState("");
 
   useEffect(() => {
+    if (!user || !user.id) return; // ✅ fix
     loadData();
-  }, []);
+  }, [user?.id]); // ✅ safer dependency
 
   const loadData = () => {
+
+    if (!user || !user.id) return; // ✅ safety
 
     API.get(`/habits/user/${user.id}`)
       .then(res => setHabits(res.data));
@@ -24,6 +27,7 @@ function Habits({ user }) {
 
   const addHabit = () => {
 
+    if (!user || !user.id) return; // ✅ safety
     if (habitName.trim() === "") return;
 
     API.post("/habits", {

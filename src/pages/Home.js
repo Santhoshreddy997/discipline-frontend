@@ -7,13 +7,14 @@ function Home({ user, setUser }) {
 
   const [localUser, setLocalUser] = useState(user);
   const today = new Date().toLocaleDateString();
+  const userId = user?.id;
 
   // 🔥 FETCH LATEST USER DATA (FIXED SAFELY)
   useEffect(() => {
 
-    if (!user || !user.id) return; // ✅ fix (important)
+    if (!userId) return; // ✅ fix (important)
 
-    API.get(`/users/${user.id}`)
+    API.get(`/users/${userId}`)
       .then(res => {
         setLocalUser(res.data);
 
@@ -28,7 +29,7 @@ function Home({ user, setUser }) {
         console.error("User refresh error:", err);
       });
 
- }, [user?.id, setUser]);// ✅ safer dependency
+ }, [userId, setUser]);// ✅ safer dependency
 
 
 

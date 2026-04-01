@@ -71,22 +71,22 @@ function App() {
       <div style={{ textAlign: "center", marginTop: "100px" }}>
 
         {showRegister ? (
-          <Register setUser={(userData) => {
-            localStorage.setItem("user", JSON.stringify(userData));
-            setUser(userData);
-          }} />
+          <Register
+            setUser={(userData) => {
+              localStorage.setItem("user", JSON.stringify(userData));
+              setUser(userData);
+            }}
+            onToggle={() => setShowRegister(false)}
+          />
         ) : (
-          <Login setUser={(userData) => {
-            localStorage.setItem("user", JSON.stringify(userData));
-            setUser(userData);
-          }} />
+          <Login
+            setUser={(userData) => {
+              localStorage.setItem("user", JSON.stringify(userData));
+              setUser(userData);
+            }}
+            onToggle={() => setShowRegister(true)}
+          />
         )}
-
-        <br /><br />
-
-        <button onClick={() => setShowRegister(!showRegister)}>
-          {showRegister ? "Go to Login" : "Create New Account"}
-        </button>
 
       </div>
     );

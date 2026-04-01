@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import API from "../api/api";
+import "./Auth.css";
 
-function Register({ setUser }) {
+function Register({ setUser, onToggle }) {
 
 const [name,setName] = useState("");
 const [email,setEmail] = useState("");
@@ -55,61 +56,69 @@ alert("Registration failed");
 
 return(
 
-<div style={{textAlign:"center"}}>
+<div className="auth-page">
+  <div className="auth-container">
 
-<h2>Register</h2>
+    <h2 className="auth-title">Register</h2>
 
-<input
-placeholder="Name"
-value={name}
-onChange={(e)=>setName(e.target.value)}
-/>
+    <input
+      className="auth-field"
+      placeholder="Name"
+      value={name}
+      onChange={(e)=>setName(e.target.value)}
+    />
 
-<br/><br/>
+    <br/><br/>
 
-<input
-placeholder="Email"
-value={email}
-onChange={(e)=>setEmail(e.target.value)}
-/>
+    <input
+      className="auth-field"
+      placeholder="Email"
+      value={email}
+      onChange={(e)=>setEmail(e.target.value)}
+    />
 
-<br/><br/>
+    <br/><br/>
 
-<input
-type="password"
-placeholder="Password"
-value={password}
-onChange={(e)=>setPassword(e.target.value)}
-/>
+    <input
+      className="auth-field"
+       type="password"
+       placeholder="Password"
+       value={password}
+       onChange={(e)=>setPassword(e.target.value)}
+    />
 
-<hr/>
+    <hr/>
 
-<h3>Your Daily Tasks</h3>
+    <h3 className="auth-subtitle">Your Daily Tasks</h3>
 
-<input
-placeholder="Task Name"
-value={taskName}
-onChange={(e)=>setTaskName(e.target.value)}
-/>
+    <input
+      className="auth-field"
+      placeholder="Task Name"
+      value={taskName}
+      onChange={(e)=>setTaskName(e.target.value)}
+    />
 
-<button onClick={addTask}>
-Add
-</button>
+    <button className="auth-button" onClick={addTask}>
+      Add
+    </button>
 
-<div>
+    <div className="auth-task-list">
+      {tasks.map((t,index)=>(
+        <div className="auth-task-item" key={index}>{t}</div>
+      ))}
+    </div>
 
-{tasks.map((t,index)=>(
-<div key={index}>{t}</div>
-))}
+    <br/>
 
-</div>
+    <button className="auth-button" onClick={registerUser}>
+      Register
+    </button>
 
-<br/>
+    <button className="auth-toggle" onClick={onToggle}>
+      Go to Login
+    </button>
 
-<button onClick={registerUser}>
-Register
-</button>
-
+  </div>
 </div>
 
 );

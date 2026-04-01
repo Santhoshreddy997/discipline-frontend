@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import API from "../api/api";
+import "./Auth.css";
 
-function Login({setUser}) {
+function Login({ setUser, onToggle }) {
 
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
@@ -28,31 +29,36 @@ setUser(res.data);
 
   return (
 
-    <div style={{textAlign:"center",marginTop:"40px"}}>
+    <div className="auth-page">
+      <div className="auth-container">
 
-      <h2>Login</h2>
+        <h2 className="auth-title">Login</h2>
 
-      <input
-        placeholder="Email"
-        value={email}
-        onChange={(e)=>setEmail(e.target.value)}
-      />
+        <input
+          className="auth-field"
+          placeholder="Email"
+          type="email"
+          value={email}
+          onChange={(e)=>setEmail(e.target.value)}
+        />
 
-      <br/><br/>
+        <input
+          className="auth-field"
+          placeholder="Password"
+          type="password"
+          value={password}
+          onChange={(e)=>setPassword(e.target.value)}
+        />
 
-      <input
-        placeholder="Password"
-        type="password"
-        value={password}
-        onChange={(e)=>setPassword(e.target.value)}
-      />
+        <button className="auth-button" onClick={loginUser}>
+          Login
+        </button>
 
-      <br/><br/>
+        <button className="auth-toggle" onClick={onToggle}>
+          Create New Account
+        </button>
 
-      <button onClick={loginUser}>
-        Login
-      </button>
-
+      </div>
     </div>
 
   );
